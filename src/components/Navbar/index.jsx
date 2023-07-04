@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NavItem from '../NavItem';
+import { ShoppingCartContext } from '../../context/ShoppingCartContext';
+import { FaShoppingCart } from 'react-icons/fa';
 
 function Navbar() {
+  const { count } = useContext(ShoppingCartContext);
   const activeStyle = 'underline underline-offset-4';
   return (
-    <nav className='fixed top-0 z-10 flex w-full items-center justify-between px-8 py-5 text-sm'>
+    <nav className='fixed top-0 z-10 flex w-full items-center justify-between bg-white px-8 py-5 text-sm shadow-md'>
       <ul className='flex items-center gap-3'>
         <li className='text-lg font-semibold'>
           <NavItem to='/'>Shopi</NavItem>
@@ -58,7 +61,10 @@ function Navbar() {
             Sign in
           </NavItem>
         </li>
-        <li> 🛒 0</li>
+        <li className='flex items-center gap-1 '>
+          {' '}
+          <FaShoppingCart size={20} /> {count}
+        </li>
       </ul>
     </nav>
   );
