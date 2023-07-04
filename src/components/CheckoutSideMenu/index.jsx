@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { FaCircleXmark } from 'react-icons/fa6';
 import './styles.css';
 import { ProductsContext } from '../../context/ProductsContext';
+import { totalPrice } from '../../utils';
 import OrderCard from '../OrderCard';
 
 function CheckoutSideMenu() {
@@ -29,6 +30,14 @@ function CheckoutSideMenu() {
         {cartProducts?.map((product) => (
           <OrderCard key={product.id} data={product} />
         ))}
+      </div>
+      <div className='mx-2 mb-2 rounded-lg border border-black/20 bg-slate-100 px-6 shadow-md shadow-black/50'>
+        <p className='flex items-center justify-between py-1'>
+          <span>Total: </span>
+          <span className='text-2xl font-medium'>
+            ${totalPrice(cartProducts)}
+          </span>
+        </p>
       </div>
     </aside>
   );
