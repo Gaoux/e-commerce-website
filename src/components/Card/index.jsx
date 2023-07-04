@@ -1,17 +1,48 @@
 import React, { useContext } from 'react';
-import { FaPlus } from 'react-icons/fa6';
-import { ShoppingCartContext } from '../../context/ShoppingCartContext';
+import { FaCheck } from 'react-icons/fa6';
+import { BiCartAdd } from 'react-icons/bi';
 import { ProductsContext } from '../../context/ProductsContext';
 
 function Card({ data }) {
-  const { addProductToCart } = useContext(ShoppingCartContext);
-  const { openProductDetail, setProductToShow } = useContext(ProductsContext);
+  const {
+    openProductDetail,
+    setProductToShow,
+    addProductToCart,
+    cartProducts,
+  } = useContext(ProductsContext);
+
+  const renderIcon = (id) => {
+    if (isInCart) {
+      return (
+        <div
+          className='absolute right-0 top-0 m-2 flex h-7 w-7 items-center justify-center rounded-full bg-green-700 p-1 shadow-lg transition-all'
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <FaCheck size={13} className=' text-white' />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className='absolute right-0 top-0 m-2 flex h-7 w-7 items-center justify-center rounded-full bg-blue-700 p-1 shadow-lg transition-all'
+          onClick={(e) => {
+            e.stopPropagation();
+            addProductToCart(data);
+          }}
+        >
+          <BiCartAdd size={17} className=' text-white' />
+        </div>
+      );
+    }
+  };
 
   const showProduct = () => {
     openProductDetail();
     setProductToShow(data);
   };
-
+  const isInCart = cartProducts.some((product) => product.id === data.id);
   return (
     <div
       className='mr-3 h-60 w-56 cursor-pointer overflow-hidden rounded-2xl bg-neutral-200 shadow-md'
@@ -27,13 +58,19 @@ function Card({ data }) {
           alt={data.title}
         />
         <div
-          className='absolute right-0 top-0 m-2 flex h-6 w-6 items-center justify-center rounded-full bg-blue-700 p-1 shadow-lg'
+          className={`${
+            isInCart ? 'bg-green-500' : 'bg-blue-700'
+          } absolute right-0 top-0 m-2 flex h-7 w-7 items-center justify-center rounded-full p-1 shadow-md shadow-black transition-all ease-linear`}
           onClick={(e) => {
             e.stopPropagation();
-            addProductToCart(data);
+            if (!isInCart) addProductToCart(data);
           }}
         >
-          <FaPlus size={13} className=' text-white' />
+          {isInCart ? (
+            <FaCheck size={13} className='text-black' />
+          ) : (
+            <BiCartAdd size={17} className='text-white' />
+          )}
         </div>
       </figure>
       <p className='flex justify-between'>

@@ -1,0 +1,8 @@
+.checkout-menu {
+  transform: translate(0, -115%);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+}
+
+.checkout-menu--active {
+  transform: none;
+}

@@ -6,8 +6,8 @@ import MyOrders from './pages/MyOrders';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/SignIn';
 import Navbar from './components/Navbar';
+import CheckoutSideMenu from './components/CheckoutSideMenu';
 import { ProductsProvider } from './context/ProductsContext';
-import { ShoppingCartProvider } from './context/ShoppingCartContext';
 import './App.css';
 
 const AppRoutes = () => {
@@ -43,12 +43,11 @@ const AppRoutes = () => {
 function App() {
   return (
     <BrowserRouter>
-      <ShoppingCartProvider>
+      <ProductsProvider>
         <Navbar />
-        <ProductsProvider>
-          <AppRoutes />
-        </ProductsProvider>
-      </ShoppingCartProvider>
+        <AppRoutes />
+        <CheckoutSideMenu />
+      </ProductsProvider>
     </BrowserRouter>
   );
 }
