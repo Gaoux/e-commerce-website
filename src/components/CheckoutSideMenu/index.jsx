@@ -1,13 +1,30 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { FaCircleXmark } from 'react-icons/fa6';
 import './styles.css';
 import { ProductsContext } from '../../context/ProductsContext';
-import { totalPrice } from '../../utils';
 import OrderCard from '../OrderCard';
+import { totalPrice } from '../../utils';
 
 function CheckoutSideMenu() {
-  const { showCheckoutSideMenu, closeCheckoutSideMenu, cartProducts } =
-    useContext(ProductsContext);
+  const {
+    showCheckoutSideMenu,
+    closeCheckoutSideMenu,
+    cartProducts,
+    addOrder,
+  } = useContext(ProductsContext);
+
+  const handleCheckout = () => {
+    const orderToAdd = {
+      date: '01.02.23',
+      products: cartProducts,
+      totalProducts: cartProducts.length,
+      totalPrice: totalPrice(cartProducts),
+    };
+    addOrder(orderToAdd);
+  };
+
+  const emptyCart = !cartProducts.length;
 
   return (
     <aside
@@ -22,7 +39,7 @@ function CheckoutSideMenu() {
         </div>
       </div>
       <div className=' max-h-[500px] min-h-[70px] overflow-y-scroll px-6'>
-        {!cartProducts.length && (
+        {emptyCart && (
           <p className='text-light mt-5 text-sm'>
             You don't have any products in your cart yet.
           </p>
@@ -31,7 +48,7 @@ function CheckoutSideMenu() {
           <OrderCard key={product.id} data={product} />
         ))}
       </div>
-      <div className='mx-2 mb-2 rounded-lg border border-black/20 bg-slate-100 px-6 shadow-md shadow-black/50'>
+      <div className='mx-3 mb-2 rounded-lg border border-black/20 bg-slate-100 px-6 shadow-md shadow-black/20'>
         <p className='flex items-center justify-between py-1'>
           <span>Total: </span>
           <span className='text-2xl font-medium'>
@@ -39,6 +56,17 @@ function CheckoutSideMenu() {
           </span>
         </p>
       </div>
+      <Link to='/my-orders/last' className='flex items-center justify-center'>
+        <button
+          className={`${
+            emptyCart ? 'bg-black/75' : 'bg-black'
+          } m-2 w-[340px] rounded-lg py-3 text-white shadow-md shadow-black/50`}
+          onClick={handleCheckout}
+          disabled={emptyCart}
+        >
+          Checkout
+        </button>
+      </Link>
     </aside>
   );
 }
