@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { FaCheck } from 'react-icons/fa6';
+import { BiPlus } from 'react-icons/bi';
 import { BiCartAdd } from 'react-icons/bi';
 import { ProductsContext } from '../../context/ProductsContext';
 
@@ -59,18 +60,14 @@ function Card({ data }) {
         />
         <div
           className={`${
-            isInCart ? 'bg-green-500' : 'bg-blue-700'
+            isInCart ? 'bg-green-500' : 'bg-white'
           } absolute right-0 top-0 m-2 flex h-7 w-7 items-center justify-center rounded-full p-1 shadow-md shadow-black transition-all ease-linear`}
           onClick={(e) => {
             e.stopPropagation();
             if (!isInCart) addProductToCart(data);
           }}
         >
-          {isInCart ? (
-            <FaCheck size={13} className='text-black' />
-          ) : (
-            <BiCartAdd size={17} className='text-white' />
-          )}
+          {isInCart ? <FaCheck size={13} /> : <BiPlus size={17} />}
         </div>
       </figure>
       <p className='flex justify-between'>

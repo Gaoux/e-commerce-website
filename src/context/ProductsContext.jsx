@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { PRODUCTS_API_URL } from '../api/ProductsAPI';
@@ -6,17 +6,80 @@ import { PRODUCTS_API_URL } from '../api/ProductsAPI';
 const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
+  // Close all menus
+  const closeMenus = () => {
+    closeCheckoutSideMenu();
+    closeProductDetail();
+  };
+  //Get products
   const {
     data: products,
     loading: productsLoading,
     error: productsError,
   } = useFetch(PRODUCTS_API_URL, []);
 
-  // Close all menus
-  const closeMenus = () => {
-    closeCheckoutSideMenu();
-    closeProductDetail();
-  };
+  // Search input value
+  const [searchByTitle, setSearchByTitle] = useState('');
+  // Get
+  const [searchByCategory, setSearchByCategory] = useState('');
+  //Filtered products
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  //Get products by inpput search value
+  useEffect(() => {
+    const filterProductsByTitle = (products, searchValue) => {
+      return products?.filter(
+        (product) =>
+          product.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+          product.category.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    };
+    const filterProductsByCategory = (products, searchValue) => {
+      return products?.filter((product) =>
+        product.category.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    };
+    const filterBy = (
+      searchType,
+      products,
+      searchByTitle,
+      searchByCategory
+    ) => {
+      if (searchType === 'BY_SEARCH_INPUT')
+        return filterProductsByTitle(products, searchByTitle);
+      else if (searchType === 'BY_CATEGORY')
+        return filterProductsByCategory(products, searchByCategory);
+      else if (searchType === 'BY_SEARCH_INPUT_AND_CATEGORY')
+        return filterProductsByTitle(
+          filterProductsByCategory(products, searchByCategory),
+          searchByTitle
+        );
+      else if (!searchType) {
+        return products;
+      }
+    };
+
+    if (searchByTitle && searchByCategory)
+      setFilteredProducts(
+        filterBy(
+          'BY_SEARCH_INPUT_AND_CATEGORY',
+          products,
+          searchByTitle,
+          searchByCategory
+        )
+      );
+    else if (!searchByCategory && searchByTitle)
+      setFilteredProducts(
+        filterBy('BY_SEARCH_INPUT', products, searchByTitle, searchByCategory)
+      );
+    else if (searchByCategory && !searchByTitle)
+      setFilteredProducts(
+        filterBy('BY_CATEGORY', products, searchByTitle, searchByCategory)
+      );
+    else {
+      setFilteredProducts(filterBy(null, products, searchByCategory));
+    }
+  }, [products, searchByTitle, searchByCategory]);
 
   // Product Detail - Open/Close
   const [showProductDetail, setShowProductDetail] = useState(false);
@@ -68,6 +131,10 @@ function ProductsProvider({ children }) {
         products,
         productsLoading,
         productsError,
+        searchByTitle,
+        setSearchByTitle,
+        setSearchByCategory,
+        filteredProducts,
         showProductDetail,
         openProductDetail,
         closeProductDetail,

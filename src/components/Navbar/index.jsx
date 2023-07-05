@@ -6,7 +6,7 @@ import { ProductsContext } from '../../context/ProductsContext';
 function Navbar() {
   const { toggleCheckoutSideMenu, cartProducts, showCheckoutSideMenu } =
     useContext(ProductsContext);
-  const activeStyle = 'underline underline-offset-4 text-blue-900';
+  const activeStyle = 'underline underline-offset-4';
   return (
     <nav className='fixed top-0 z-10 flex w-full items-center justify-between bg-white px-8 py-5 text-sm shadow-md'>
       <ul className='flex items-center gap-3'>
@@ -14,12 +14,12 @@ function Navbar() {
           <NavItem to='/'>Shopi</NavItem>
         </li>
         <li>
-          <NavItem to='/all' activeStyle={activeStyle}>
+          <NavItem to='/' activeStyle={activeStyle}>
             All
           </NavItem>
         </li>
         <li>
-          <NavItem to='/clothes' activeStyle={activeStyle}>
+          <NavItem to='/clothing' activeStyle={activeStyle}>
             Clothes
           </NavItem>
         </li>
@@ -29,13 +29,8 @@ function Navbar() {
           </NavItem>
         </li>
         <li>
-          <NavItem to='/furnitures' activeStyle={activeStyle}>
-            Furnitures
-          </NavItem>
-        </li>
-        <li>
-          <NavItem to='/toys' activeStyle={activeStyle}>
-            Toys
+          <NavItem to='/jewelery' activeStyle={activeStyle}>
+            Jewelery
           </NavItem>
         </li>
         <li>
@@ -65,7 +60,7 @@ function Navbar() {
         <li
           className={`${
             showCheckoutSideMenu && 'text-red-600/70'
-          } flex items-center gap-1 transition-colors`}
+          } flex cursor-pointer items-center gap-1 transition-colors`}
           onClick={toggleCheckoutSideMenu}
         >
           <FaShoppingCart

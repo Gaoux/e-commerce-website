@@ -15,9 +15,7 @@ function MyOrders() {
       </div>
       <div>
         {emptyOrders && (
-          <p className='text-light mt-5 text-sm'>
-            You don't have any orders yet.
-          </p>
+          <p className='text-light mt-5 text-sm'>You don't have any orders.</p>
         )}
         <div>
           {orders?.map((order, index) => (

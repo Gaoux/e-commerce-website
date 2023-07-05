@@ -12,7 +12,6 @@ function CheckoutSideMenu() {
     closeCheckoutSideMenu,
     cartProducts,
     addOrder,
-    orders,
   } = useContext(ProductsContext);
 
   const handleCheckout = () => {
@@ -42,7 +41,7 @@ function CheckoutSideMenu() {
       <div className=' max-h-[500px] min-h-[70px] overflow-y-scroll px-6'>
         {emptyCart && (
           <p className='text-light mt-5 text-sm'>
-            You don't have any products in your cart yet.
+            You don't have any products in your cart.
           </p>
         )}
         {cartProducts?.map((product) => (
