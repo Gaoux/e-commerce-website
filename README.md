@@ -4,7 +4,7 @@ This repository contains the source code for an e-commerce page built with Vite 
 
 ## Live Deployment
 
-The repository is currently deployed and accessible [here]().
+The repository is currently deployed and accessible [here](https://main--idyllic-cendol-faada5.netlify.app).
 
 ## Technologies Used
 
@@ -43,9 +43,9 @@ To get started with this project, follow the steps below:
 
 4.  Start the development server:
 
-        ```console
-         npm run dev
-        ```
+    ```console
+     npm run dev
+    ```
 
     This will start the development server and provide you with a local URL where you can access the website.
 
