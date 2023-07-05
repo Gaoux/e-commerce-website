@@ -56,11 +56,14 @@ function CheckoutSideMenu() {
           </span>
         </p>
       </div>
-      <Link to={`/my-orders/0`} className='flex items-center justify-center'>
+      <Link
+        to={`/my-orders/0`}
+        className='m-2 flex w-[340px] items-center justify-center'
+      >
         <button
           className={`${
             emptyCart ? 'bg-black/75' : 'bg-black'
-          } m-2 w-[340px] rounded-lg py-3 text-white shadow-md shadow-black/50`}
+          } w-full rounded-lg py-3 text-white shadow-md shadow-black/50`}
           onClick={handleCheckout}
           disabled={emptyCart}
         >
