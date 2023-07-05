@@ -36,7 +36,7 @@ function ProductsProvider({ children }) {
   // Shoppping cart - Add Order
   const addOrder = (newOrder) => {
     setCartProducts([]);
-    setOrders([...orders, newOrder]);
+    setOrders([newOrder, ...orders]);
   };
   // Checkout Side Menu - Open/Close
   const [showCheckoutSideMenu, setShowCheckoutSideMenu] = useState(false);
@@ -45,7 +45,10 @@ function ProductsProvider({ children }) {
     setShowCheckoutSideMenu(true);
   };
   const closeCheckoutSideMenu = () => setShowCheckoutSideMenu(false);
-
+  const toggleCheckoutSideMenu = () => {
+    if (showCheckoutSideMenu) closeCheckoutSideMenu();
+    else openCheckoutSideMenu();
+  };
   // Shoppping cart - Add products to cart
   const addProductToCart = (productData) => {
     setCartProducts([...cartProducts, productData]);
@@ -78,6 +81,7 @@ function ProductsProvider({ children }) {
         showCheckoutSideMenu,
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
+        toggleCheckoutSideMenu,
       }}
     >
       {children}

@@ -12,6 +12,7 @@ function CheckoutSideMenu() {
     closeCheckoutSideMenu,
     cartProducts,
     addOrder,
+    orders,
   } = useContext(ProductsContext);
 
   const handleCheckout = () => {
@@ -56,7 +57,7 @@ function CheckoutSideMenu() {
           </span>
         </p>
       </div>
-      <Link to='/my-orders/last' className='flex items-center justify-center'>
+      <Link to={`/my-orders/0`} className='flex items-center justify-center'>
         <button
           className={`${
             emptyCart ? 'bg-black/75' : 'bg-black'

@@ -4,8 +4,9 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { ProductsContext } from '../../context/ProductsContext';
 
 function Navbar() {
-  const { openCheckoutSideMenu, cartProducts } = useContext(ProductsContext);
-  const activeStyle = 'underline underline-offset-4';
+  const { toggleCheckoutSideMenu, cartProducts, showCheckoutSideMenu } =
+    useContext(ProductsContext);
+  const activeStyle = 'underline underline-offset-4 text-blue-900';
   return (
     <nav className='fixed top-0 z-10 flex w-full items-center justify-between bg-white px-8 py-5 text-sm shadow-md'>
       <ul className='flex items-center gap-3'>
@@ -61,8 +62,17 @@ function Navbar() {
             Sign in
           </NavItem>
         </li>
-        <li className='flex items-center gap-1 ' onClick={openCheckoutSideMenu}>
-          <FaShoppingCart size={20} /> {cartProducts.length}
+        <li
+          className={`${
+            showCheckoutSideMenu && 'text-red-600/70'
+          } flex items-center gap-1 transition-colors`}
+          onClick={toggleCheckoutSideMenu}
+        >
+          <FaShoppingCart
+            size={showCheckoutSideMenu ? 23 : 20}
+            className='transition-all'
+          />{' '}
+          {cartProducts.length}
         </li>
       </ul>
     </nav>
